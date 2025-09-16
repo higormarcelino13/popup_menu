@@ -1,13 +1,13 @@
 require "test_helper"
 
 class MenuItemTest < ActiveSupport::TestCase
-  test "é inválido sem nome" do
+  test "is invalid without name" do
     item = MenuItem.new(price: 5.0)
     assert_not item.valid?
     assert_includes item.errors[:name], "can't be blank"
   end
 
-  test "é inválido com preço ausente ou negativo" do
+  test "is invalid with missing or negative price" do
     item = MenuItem.new(name: "Prato")
     assert_not item.valid?
     assert_includes item.errors[:price], "can't be blank"
@@ -16,7 +16,7 @@ class MenuItemTest < ActiveSupport::TestCase
     assert_not item2.valid?
   end
 
-  test "associa com menus via HABTM" do
+  test "associates with menus via HABTM" do
     item = MenuItem.create!(name: "P1", price: 12.5)
     r = Restaurant.create!(name: "R")
     m = Menu.create!(name: "M", restaurant: r)

@@ -1,13 +1,13 @@
 require "test_helper"
 
 class RestaurantTest < ActiveSupport::TestCase
-  test "é inválido sem nome" do
+  test "is invalid without name" do
     restaurant = Restaurant.new
     assert_not restaurant.valid?
     assert_includes restaurant.errors[:name], "can't be blank"
   end
 
-  test "tem muitos menus e apaga dependentes" do
+  test "has many menus and destroys dependents" do
     restaurant = Restaurant.create!(name: "R1")
     menu1 = Menu.create!(name: "M1", restaurant: restaurant)
     menu2 = Menu.create!(name: "M2", restaurant: restaurant)

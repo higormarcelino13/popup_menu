@@ -1,7 +1,7 @@
 require "test_helper"
 
 class RestaurantControllerTest < ActionDispatch::IntegrationTest
-  test "GET /restaurants/show retorna lista de restaurantes" do
+  test "GET /restaurants/show returns restaurant list" do
     Restaurant.create!(name: "R1")
     Restaurant.create!(name: "R2")
 
@@ -11,7 +11,7 @@ class RestaurantControllerTest < ActionDispatch::IntegrationTest
     assert_equal 2, body["data"].length
   end
 
-  test "POST /restaurants/create cria restaurante válido" do
+  test "POST /restaurants/create creates a restaurant" do
     post "/restaurants/create", params: { restaurant: { name: "Novo" } }
     assert_response :success
 
@@ -19,7 +19,7 @@ class RestaurantControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Received params", body["message"]
   end
 
-  test "DELETE /restaurants/:id deleta restaurante" do
+  test "DELETE /restaurants/:id deletes restaurant" do
     r = Restaurant.create!(name: "R3")
     delete "/restaurants/#{r.id}"
     assert_response :success
@@ -28,7 +28,7 @@ class RestaurantControllerTest < ActionDispatch::IntegrationTest
     assert_nil Restaurant.where(id: r.id).first
   end
 
-  test "POST /restaurants/bulk_create cria dados conforme payload do teste" do
+  test "POST /restaurants/bulk_create creates data based on payload" do
     payload = {
       restaurants: [
         {
