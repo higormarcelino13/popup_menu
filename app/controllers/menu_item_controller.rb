@@ -1,17 +1,17 @@
-class MenuController < ActionController::API
+class MenuItemController < ActionController::API
   def index
-    render json: MenuItem.all, each_serializer: MenuItemSerializer
+    render json: MenuItemSerializer.new(MenuItem.all).serializable_hash
   end
 
   def show
     menu_item = MenuItem.find(params[:id])
-    render json: menu_item, serializer: MenuItemSerializer
+    render json: MenuItemSerializer.new(menu_item).serializable_hash
   end
 
   def create
     menu_item = MenuItem.new(menu_item_params)
     if menu_item.save
-      render json: menu_item, status: :created, serializer: MenuItemSerializer
+      render json: MenuItemSerializer.new(menu_item).serializable_hash, status: :created
     else
       render json: menu_item.errors, status: :unprocessable_entity
     end

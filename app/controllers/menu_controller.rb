@@ -1,36 +1,30 @@
 class MenuController < ActionController::API
   def index
-    render json: MenuItem.all, each_serializer: MenuItemSerializer
+    render json: MenuSerializer.new(Menu.all).serializable_hash
   end
 
   def show
-    menu_item = MenuItem.find(params[:id])
-    render json: menu_item, serializer: MenuItemSerializer
-  end
-
-  def new
-    menu_item = MenuItem.new
-    render json: menu_item, serializer: MenuItemSerializer
+    menu = Menu.find(params[:id])
+    render json: MenuSerializer.new(menu).serializable_hash
   end
 
   def create
-    menu_item = MenuItem.new(menu_item_params)
-    if menu_item.save
-      render json: menu_item, status: :created, serializer: MenuItemSerializer
+    menu = Menu.new(menu_params)
+    if menu.save
+      render json: MenuSerializer.new(menu).serializable_hash, status: :created
     else
-      render json: menu_item.errors, status: :unprocessable_entity
+      render json: menu.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    menu_item = MenuItem.find(params[:id])
-    menu_item.destroy
+    menu = Menu.find(params[:id])
+    menu.destroy
     head :no_content
   end
 
   private
-
-  def menu_item_params
-    params.require(:menu_item).permit(:name, :price)
+  def menu_params
+    params.require(:menu).permit(:name, :restaurant_id, menu_item_ids: [])
   end
 end

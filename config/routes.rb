@@ -20,6 +20,17 @@ Rails.application.routes.draw do
   # end
   post "/restaurants/create", to: "restaurant#create"
   post "/restaurants/bulk_create", to: "restaurant#bulk_create"
+  post "/restaurants/import", to: "restaurant#import"
   get "/restaurants/show", to: "restaurant#index"
   delete "/restaurants/:id", to: "restaurant#destroy"
+
+  get "/menus", to: "menu#index"
+  get "/menus/:id", to: "menu#show"
+  post "/menus", to: "menu#create"
+  delete "/menus/:id", to: "menu#destroy"
+
+  get "/menu_items", to: "menu_item#index"
+  get "/menu_items/:id", to: "menu_item#show"
+  post "/menu_items", to: "menu_item#create"
+  delete "/menu_items/:id", to: "menu_item#destroy"
 end

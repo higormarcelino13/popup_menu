@@ -26,9 +26,7 @@ class RestaurantController < ActionController::API
     puts "Received bulk create params:"
     p params.inspect
     restaurants = params[:restaurants]&.map do |restaurant_param|
-      # puts "Processing restaurant param:"
-      # p restaurant_param
-      # Restaurant.new(restaurant_param.permit(:name, menus_attributes: [:name, menu_items_attributes: []], menu_items_attributes: [:name, :price]))
+      restaurant_param
     end
     render json: { message: "Processed restaurants", restaurants: restaurants }, status: :ok and return
     if restaurants.all?(&:valid?)
@@ -40,6 +38,13 @@ class RestaurantController < ActionController::API
       end.compact
       render json: { errors: errors }, status: :unprocessable_entity
     end
+  end
+
+  def import
+    service = JsonImportService.new(params.permit!.to_h.deep_symbolize_keys)
+    result = service.call
+    status_code = result.success ? :ok : :unprocessable_entity
+    render json: { success: result.success, logs: result.logs }, status: status_code
   end
 
   def destroy
