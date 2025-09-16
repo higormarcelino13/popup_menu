@@ -1,12 +1,12 @@
 class RestaurantController < ActionController::API
   def index
     restaurants = Restaurant.all
-    render json: restaurants, each_serializer: RestaurantSerializer
+    render json: RestaurantSerializer.new(restaurants).serializable_hash
   end
 
   def show
     restaurant = Restaurant.find(params[:id])
-    render json: restaurant, serializer: RestaurantSerializer
+    render json: RestaurantSerializer.new(restaurant).serializable_hash
   end
 
   def create

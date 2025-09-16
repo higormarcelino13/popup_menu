@@ -1,0 +1,47 @@
+development:
+  clients:
+    default:
+      database: popup_menu_development
+      hosts:
+        - localhost:27017
+      options:
+        server_selection_timeout: 2
+
+test:
+  clients:
+    default:
+      database: popup_menu_test
+      hosts:
+        - localhost:27017
+      options:
+        server_selection_timeout: 2
+
+production:
+  clients:
+    default:
+      database: popup_menu_production
+      hosts:
+        - localhost:27017
+      options:
+        server_selection_timeout: 2
+development:
+  clients:
+    default:
+      uri: mongodb://127.0.0.1:27017/popup_menu_development
+  options:
+    use_activesupport_time_zone: true
+
+test:
+  clients:
+    default:
+      uri: mongodb://127.0.0.1:27017/popup_menu_test
+  options:
+    use_activesupport_time_zone: true
+
+production:
+  clients:
+    default:
+      uri: <%= ENV.fetch("MONGODB_URI", "mongodb://127.0.0.1:27017/popup_menu_production") %>
+  options:
+    use_activesupport_time_zone: true
+

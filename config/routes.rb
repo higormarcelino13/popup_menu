@@ -18,10 +18,8 @@ Rails.application.routes.draw do
   #     resources :menu_items, only: [ :show, :create, :destroy ]
   #   end
   # end
-  resource :restaurants do
-    post "create", to: "restaurant#create"
-    post "bulk_create", to: "restaurant#bulk_create"
-    get :show, to: "restaurant#index"
-    delete ":id", to: "restaurant#destroy"
-  end
+  post "/restaurants/create", to: "restaurant#create"
+  post "/restaurants/bulk_create", to: "restaurant#bulk_create"
+  get "/restaurants/show", to: "restaurant#index"
+  delete "/restaurants/:id", to: "restaurant#destroy"
 end
